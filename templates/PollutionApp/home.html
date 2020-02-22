@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Pollution Index</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Here is the list of all the States Pollution Index:</h1>
+      <h2>{{ current_city }}</h2>
+      <input type="text" id="myInput" placeholders="Enter the name of city .." onkeyup="filter_funct()" onkeydown="filter_funct()">
+      {% if records %}
+        <table class="table" id='dataTable'>
+
+          <tr>
+            <th>City</th>
+            <th>State</th>
+            <th>Station</th>
+            <th>Country</th>
+            <th>City_Id</th>
+            <th>Last_Update</th>
+            <th>Pollutant_avg</th>
+            <th>Pollutant_Id</th>
+            <th>Pollutant_Max</th>
+            <th>Pollutant_Min</th>
+            <th>Pollutant_Unit</th>
+          </tr>
+          <!-- { 'city': 'Lucknow',
+                  'country': 'India',
+                  'id': '1144',
+                  'last_update': '22-02-2020 05:00:00',
+                  'pollutant_avg': '61',
+                  'pollutant_id': 'PM2.5',
+                  'pollutant_max': '212',
+                  'pollutant_min': '33',
+                  'pollutant_unit': 'NA',
+                  'state': 'Uttar_Pradesh',
+                  'station': 'Gomti Nagar, Lucknow - UPPCB'} -->
+          {% for each_record in records %}
+            <tr>
+
+              <td>{{each_record.city}}</td>
+              <td>{{each_record.state}}</td>
+              <td>{{each_record.station}}</td>
+              <td>{{each_record.country}}</td>
+              <td>{{each_record.id}}</td>
+              <td>{{each_record.last_update}}</td>
+              <td>{{each_record.pollutant_avg}}</td>
+              <td>{{each_record.pollutant_id}}</td>
+              <td>{{each_record.pollutant_max}}</td>
+              <td>{{each_record.pollutant_min}}</td>
+              <td>{{each_record.pollutant_unit}}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% endif %}
+    </div>
+
+  <script>
+    const filter_funct = () =>{
+      let filter = document.getElementById('myInput').value.toUpperCase();
+      let table = document.getElementById('dataTable');
+      let tr = table.getElementsByTagName('tr');
+      for (var i=1;i<tr.length;i++){
+          let city = tr[i].getElementsByTagName('td')[0]
+          if (city){
+            let cityText = city.textContent || city.innerHTML;
+            if (cityText.toUpperCase().indexOf(filter) > -1){
+              tr[i].style.display = "";
+            }else{
+              tr[i].style.display = "none";
+            }
+          }
+      }
+    }
+  </script>
+  </body>
+</html>
